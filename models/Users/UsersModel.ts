@@ -1,4 +1,4 @@
-import { Schema, model, SchemaTypes} from 'mongoose'
+import { Schema, model, SchemaTypes, CallbackWithoutResultAndOptionalError } from 'mongoose'
 import User from './Users.interface';
 import bcrypt from 'bcrypt'
 
@@ -43,7 +43,7 @@ const UserSchema = new Schema<User>({
 
 })
 
-UserSchema.pre("save", { document: true }, async function (next) {
+UserSchema.pre("save", async function (next: CallbackWithoutResultAndOptionalError) {
   if (!this.isModified("password")) {
     return next()
   }
@@ -51,7 +51,7 @@ UserSchema.pre("save", { document: true }, async function (next) {
     const hash = await bcrypt.hash(this.password, 12);
     this.password = hash;
     return next();
-  } catch (error: any) {
+  } catch (error) {
     return next(error)
   }
 });
