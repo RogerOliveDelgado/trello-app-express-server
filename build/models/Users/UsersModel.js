@@ -42,7 +42,7 @@ const UserSchema = new mongoose_1.Schema({
             ref: "Task"
         }]
 });
-UserSchema.pre("save", { document: true }, async function (next) {
+UserSchema.pre("save", async function (next) {
     if (!this.isModified("password")) {
         return next();
     }

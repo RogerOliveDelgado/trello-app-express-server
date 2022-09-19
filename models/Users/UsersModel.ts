@@ -1,6 +1,7 @@
 import { Schema, model, SchemaTypes, CallbackWithoutResultAndOptionalError } from 'mongoose'
 import User from './Users.interface';
 import bcrypt from 'bcrypt'
+import { NextFunction } from 'express';
 
 const UserSchema = new Schema<User>({
   firstName: {
@@ -43,7 +44,7 @@ const UserSchema = new Schema<User>({
 
 })
 
-UserSchema.pre("save", async function (next: CallbackWithoutResultAndOptionalError) {
+UserSchema.pre("save", async function (next: NextFunction) {
   if (!this.isModified("password")) {
     return next()
   }
