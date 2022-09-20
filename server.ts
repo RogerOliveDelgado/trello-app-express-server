@@ -22,5 +22,8 @@ app.use("/auth", authRouter);
 app.use("/user", userRouter);
 app.use("/board", boardRouter);
 app.use("/task", taskRouter);
+app.use("/", (_req, res) => {
+  res.send("TrelloApp Server")
+})
 
 export default app;
