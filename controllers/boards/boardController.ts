@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express-serve-static-core"
+import { Request, Response, NextFunction } from "express"
 import BoardModel from '../../models/Boards/BoardModel'
 import db from '../../models/index'
 
