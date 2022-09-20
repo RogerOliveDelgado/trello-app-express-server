@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx tsc",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q build/index.js\"",
-    "start": "vercel dev",
+    "start": "node build/index.js",
     "deploy": "vercel deploy --prod"
   },
   "repository": {
