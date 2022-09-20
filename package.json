@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx tsc",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q build/index.js\""
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q build/index.js\"",
+    "start": "vercel dev",
+    "deploy": "vercel deploy --prod"
   },
   "repository": {
     "type": "git",
@@ -27,7 +29,8 @@
     "jsonwebtoken": "^8.5.1",
     "loglevel": "^1.8.0",
     "mongoose": "^6.6.1",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "vercel": "^28.3.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
