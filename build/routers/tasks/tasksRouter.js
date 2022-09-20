@@ -7,4 +7,6 @@ const taskRouter = (0, express_1.Router)();
 exports.taskRouter = taskRouter;
 // taskRouter.get('/getUserTasks',getUserTasks);
 taskRouter.post('', tasksController_1.createUserTask);
+taskRouter.post('/update', tasksController_1.updateUserTask);
+taskRouter.post('/deleteTask', tasksController_1.deleteUserTask);
 //# sourceMappingURL=tasksRouter.js.map

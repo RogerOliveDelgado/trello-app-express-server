@@ -3,7 +3,7 @@ import { verify, JwtPayload, decode } from "jsonwebtoken";
 import { nextTick } from "process";
 import config from "../config/config";
 
-interface AuthRequest extends Request {
+export default interface AuthRequest extends Request {
   user: string | JwtPayload;
 }
 
