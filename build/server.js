@@ -17,7 +17,7 @@ app.use(express_1.default.json());
 //Routers
 app.use(userRouter_1.userRouter);
 app.use(boardRouter_1.boardRouter);
-app.use(tasksRouter_1.tasksRouter);
+app.use(tasksRouter_1.taskRouter);
 app.post("/board", async (req, res) => {
     const name = req.body.name;
     const newBoard = await index_1.default.Board.create({ name: name });

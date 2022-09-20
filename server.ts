@@ -5,7 +5,7 @@ import morgan from 'morgan'
 import db from './models/index'
 import {userRouter} from './routers/users/userRouter'
 import {boardRouter} from './routers/boards/boardRouter'
-import {tasksRouter} from './routers/tasks/tasksRouter'
+import {taskRouter} from './routers/tasks/tasksRouter'
 
 dotenv.config()
 
@@ -18,7 +18,7 @@ app.use(express.json())
 //Routers
 app.use(userRouter);
 app.use(boardRouter);
-app.use(tasksRouter);
+app.use(taskRouter);
 
 app.post("/board", async (req:Request, res:Response )=> {
   const name = req.body.name
