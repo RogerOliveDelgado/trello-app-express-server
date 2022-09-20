@@ -1,9 +1,9 @@
 import mongoose , {Mongoose} from "mongoose";
+import config from '../config/config'
 
-const MONGO_URI = process.env.MONGO_ATLAS_URI || "";
+const MONGO_URI = config.db.url || "";
 
 function connect() : Promise<Mongoose> {
-  console.log(process.env.MONGO_ATLAS_URI)
   return mongoose.connect(MONGO_URI);
 }
 
