@@ -1,5 +1,5 @@
 import { GenericConfig } from "../types/config";
-import dotenv from 'dotenv'
+import dotenv from "dotenv";
 import * as logger from "loglevel";
 
 dotenv.config();
@@ -12,6 +12,7 @@ const CONFIG: GenericConfig = {
   production: {
     app: {
       PORT: process.env.PORT || 4000,
+      PRIVATE_KEY: process.env.JWT_SECRET_KEY,
     },
     logger: {
       warn: logger.warn,
@@ -27,6 +28,7 @@ const CONFIG: GenericConfig = {
   development: {
     app: {
       PORT: process.env.PORT || 4000,
+      PRIVATE_KEY: process.env.JWT_SECRET_KEY,
     },
     logger: {
       warn: logger.warn,
@@ -42,6 +44,7 @@ const CONFIG: GenericConfig = {
   test: {
     app: {
       PORT: process.env.PORT || 4000,
+      PRIVATE_KEY: process.env.JWT_SECRET_KEY,
     },
     logger: {
       warn: logger.warn,

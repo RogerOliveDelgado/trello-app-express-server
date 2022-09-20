@@ -1,5 +1,5 @@
 import Task from "../Tasks/Tasks.interface";
-export default interface User {
+export default interface IUser {
     firstName: string;
     lastName: string;
     address: string;
@@ -7,8 +7,9 @@ export default interface User {
     email: string;
     password: string;
     role: Role;
-    profilePicture: string;
+    profilePicture?: string;
     tasks: Task[];
+    comparePassword?: (candidatePassword: string) => Promise<Boolean>;
 }
 declare type Role = "Admin" | "User";
 export {};
