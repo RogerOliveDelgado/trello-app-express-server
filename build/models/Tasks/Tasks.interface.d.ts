@@ -1,6 +1,6 @@
 import User from '../Users/Users.interface';
 import Board from '../Boards/Board.interface';
-export default interface Task {
+export default interface ITask {
     title: string;
     description: string;
     employees: User[];

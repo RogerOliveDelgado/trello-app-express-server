@@ -63,6 +63,13 @@ const signUpUser = async (req, res) => {
         });
         //TODO: Remove password from user to send it back to the client
         //delete newUser.delete;
+        const tokenPayload = {
+            sub: newUser._id,
+            name: newUser.firstName,
+        };
+        const token = await (0, jsonwebtoken_1.sign)(tokenPayload, config_1.default.app.PRIVATE_KEY, {
+            expiresIn: "3600s",
+        });
         return res.status(200).send({
             ok: true,
             data: { firstName, lastName, address, birthday, email, role },

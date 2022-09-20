@@ -23,6 +23,6 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose" />
 /// <reference types="mongoose/types/inferschematype" />
-import Board from './Board.interface';
-declare const BoardModel: import("mongoose").Model<Board, {}, {}, {}, any>;
+import IBoard from './Board.interface';
+declare const BoardModel: import("mongoose").Model<IBoard, {}, {}, {}, any>;
 export default BoardModel;
