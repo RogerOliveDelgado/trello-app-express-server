@@ -1,4 +1,5 @@
 import Task from "../Tasks/Tasks.interface"
+import {Model} from 'mongoose'
 
 export default interface IUser {
     firstName: string
@@ -10,7 +11,12 @@ export default interface IUser {
     role: Role
     profilePicture?: string
     tasks: Task[],
-    comparePassword?: (candidatePassword: string) => Promise<Boolean>;
 }
+
+export interface IUserMethods {
+    comparePassword: (candidatePassword: string) => Promise<Boolean>;
+}
+
+export type UserModel = Model<IUser, {}, IUserMethods>
 
 type Role = "Admin" | "User"

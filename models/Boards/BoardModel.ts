@@ -1,7 +1,7 @@
 import { Schema, model, SchemaTypes} from 'mongoose'
-import Board from './Board.interface';
+import IBoard from './Board.interface';
 
-const BoardSchema = new Schema<Board>({
+const BoardSchema = new Schema<IBoard>({
     name: {
         type: String,
         required: [true, "Name required"]
@@ -13,6 +13,6 @@ const BoardSchema = new Schema<Board>({
     }]
 })
 
-const BoardModel = model<Board>("Board", BoardSchema)
+const BoardModel = model<IBoard>("Board", BoardSchema)
 
 export default BoardModel

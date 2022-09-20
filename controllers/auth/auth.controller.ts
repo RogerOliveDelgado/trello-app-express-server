@@ -77,6 +77,15 @@ const signUpUser = async (req: Request, res: Response) => {
     //TODO: Remove password from user to send it back to the client
     //delete newUser.delete;
 
+    const tokenPayload = {
+      sub: newUser._id,
+      name: newUser.firstName,
+    };
+
+    const token = await sign(tokenPayload, config.app.PRIVATE_KEY, {
+      expiresIn: "3600s",
+    });
+
     return res.status(200).send({
       ok: true,
       data: { firstName, lastName, address, birthday, email, role },

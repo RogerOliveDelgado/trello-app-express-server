@@ -4,11 +4,11 @@ import {
   SchemaTypes,
   CallbackWithoutResultAndOptionalError,
 } from "mongoose";
-import User from "./Users.interface";
+import IUser, { IUserMethods, UserModel } from "./Users.interface";
 import bcrypt from "bcrypt";
 import { NextFunction } from "express";
 
-const UserSchema = new Schema<User>({
+const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
   firstName: {
     type: String,
     required: [true, "First name required"],
@@ -49,7 +49,7 @@ const UserSchema = new Schema<User>({
   ],
 });
 
-UserSchema.methods.comparePassword = async function (
+UserSchema.method('comparePassword', async function (
   candidatePassword: string
 ): Promise<boolean> {
   try {
@@ -57,7 +57,7 @@ UserSchema.methods.comparePassword = async function (
   } catch (error) {
     return false;
   }
-};
+});
 
 UserSchema.pre("save", async function (next: NextFunction) {
   if (!this.isModified("password")) {
@@ -72,6 +72,6 @@ UserSchema.pre("save", async function (next: NextFunction) {
   }
 });
 
-const UserModel = model<User>("User", UserSchema);
+const UserModel = model<IUser, UserModel>("User", UserSchema);
 
 export default UserModel;
