@@ -1,1 +1,1 @@
-{"version":3,"file":"tasksRouter.js","sourceRoot":"","sources":["../../../routers/tasks/tasksRouter.ts"],"names":[],"mappings":";;;AAAA,qCAAiC;AACjC,6EAAuE;AAEvE,MAAM,WAAW,GAAG,IAAA,gBAAM,GAAE,CAAC;AAItB,kCAAW;AAFlB,WAAW,CAAC,GAAG,CAAC,eAAe,EAAE,8BAAY,CAAC,CAAC"}
+{"version":3,"file":"tasksRouter.js","sourceRoot":"","sources":["../../../routers/tasks/tasksRouter.ts"],"names":[],"mappings":";;;AAAA,qCAAiC;AACjC,6EAAuE;AAEvE,MAAM,UAAU,GAAG,IAAA,gBAAM,GAAE,CAAC;AAIrB,gCAAU;AAFjB,UAAU,CAAC,GAAG,CAAC,eAAe,EAAC,8BAAY,CAAC,CAAC"}

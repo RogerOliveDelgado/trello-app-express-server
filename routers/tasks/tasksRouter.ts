@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { getUserTasks } from "../../controllers/tasks/tasksController";
 
-const tasksRouter = Router();
+const taskRouter = Router();
 
-tasksRouter.get('/getUserTasks', getUserTasks);
+taskRouter.get('/getUserTasks',getUserTasks);
 
-export{tasksRouter}
+export{taskRouter}

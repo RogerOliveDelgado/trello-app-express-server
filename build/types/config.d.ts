@@ -1,6 +1,7 @@
 declare type ConfigOptions = {
     app: {
         PORT: string | number;
+        PRIVATE_KEY: string;
     };
     logger: {
         warn: (message: string) => void;

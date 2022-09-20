@@ -1,6 +1,7 @@
 declare const _default: {
     app: {
         PORT: string | number;
+        PRIVATE_KEY: string;
     };
     logger: {
         warn: (message: string) => void;
