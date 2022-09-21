@@ -27,6 +27,7 @@ const UserSchema = new mongoose_1.Schema({
     password: {
         type: String,
         required: [true, "Password required"],
+        select: false,
     },
     role: {
         type: String,
@@ -43,7 +44,7 @@ const UserSchema = new mongoose_1.Schema({
         },
     ],
 });
-UserSchema.method('comparePassword', async function (candidatePassword) {
+UserSchema.method("comparePassword", async function (candidatePassword) {
     try {
         return await bcrypt_1.default.compare(candidatePassword, this.password);
     }
@@ -63,6 +64,13 @@ UserSchema.pre("save", async function (next) {
     catch (error) {
         return next(error);
     }
+});
+UserSchema.set("toJSON", {
+    transform: (_, result) => {
+        delete result.password;
+        delete result.__v;
+        return result;
+    },
 });
 const UserModel = (0, mongoose_1.model)("User", UserSchema);
 exports.default = UserModel;

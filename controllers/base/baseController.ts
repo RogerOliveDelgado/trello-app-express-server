@@ -8,10 +8,10 @@ const create =
     const body = { ...req.body } as T;
     try {
       const doc = await model.create(body);
-      const sanitizeDoc: T = doc.toObject();
-      "password" in sanitizeDoc && delete sanitizeDoc["password"];
+      // const sanitizeDoc: T = doc.toObject();
+      // "password" in sanitizeDoc && delete sanitizeDoc["password"];
 
-      res.status(200).send({ ok: true, data: sanitizeDoc });
+      res.status(200).send({ ok: true, data: doc });
     } catch (error) {
       res.status(400).send({ ok: false, msg: "Element cannot be created" });
     }
@@ -23,7 +23,7 @@ const read =
     const { id } = req.params;
 
     try {
-      const doc = await model.findById(id, "-password").lean().exec();
+      const doc = await model.findById(id).lean().exec();
       res.status(200).send({ ok: true, data: doc });
     } catch (error) {
       console.log(error);
@@ -35,7 +35,7 @@ const readAll =
   <T>(model: Model<T>) =>
   async (_req: AuthRequest, res: Response, _next: NextFunction) => {
     try {
-      const doc = await model.find({}, "-password").lean().exec();
+      const doc = await model.find({}).lean().exec();
       res.status(200).send({ ok: true, data: doc });
     } catch (error) {
       res.status(400).send({ ok: false, msg: "Elements cannot be found" });
@@ -53,8 +53,6 @@ const update =
         .findByIdAndUpdate(id, { $set: { ...body } }, { new: true })
         .lean()
         .exec();
-
-      "password" in doc && delete doc["password"];
 
       res.status(200).send({ ok: true, data: doc });
     } catch (error) {

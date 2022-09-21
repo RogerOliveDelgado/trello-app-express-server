@@ -5,9 +5,9 @@ const create = (model) => async (req, res, _next) => {
     const body = { ...req.body };
     try {
         const doc = await model.create(body);
-        const sanitizeDoc = doc.toObject();
-        "password" in sanitizeDoc && delete sanitizeDoc["password"];
-        res.status(200).send({ ok: true, data: sanitizeDoc });
+        // const sanitizeDoc: T = doc.toObject();
+        // "password" in sanitizeDoc && delete sanitizeDoc["password"];
+        res.status(200).send({ ok: true, data: doc });
     }
     catch (error) {
         res.status(400).send({ ok: false, msg: "Element cannot be created" });
@@ -17,7 +17,7 @@ exports.create = create;
 const read = (model) => async (req, res, _next) => {
     const { id } = req.params;
     try {
-        const doc = await model.findById(id, "-password").lean().exec();
+        const doc = await model.findById(id).lean().exec();
         res.status(200).send({ ok: true, data: doc });
     }
     catch (error) {
@@ -28,7 +28,7 @@ const read = (model) => async (req, res, _next) => {
 exports.read = read;
 const readAll = (model) => async (_req, res, _next) => {
     try {
-        const doc = await model.find({}, "-password").lean().exec();
+        const doc = await model.find({}).lean().exec();
         res.status(200).send({ ok: true, data: doc });
     }
     catch (error) {
@@ -44,7 +44,6 @@ const update = (model) => async (req, res, _next) => {
             .findByIdAndUpdate(id, { $set: { ...body } }, { new: true })
             .lean()
             .exec();
-        "password" in doc && delete doc["password"];
         res.status(200).send({ ok: true, data: doc });
     }
     catch (error) {

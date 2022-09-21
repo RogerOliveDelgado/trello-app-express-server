@@ -80,6 +80,4 @@ const signUpUser = async (req, res) => {
     }
 };
 exports.signUpUser = signUpUser;
-const logout = async (req, res) => {
-};
 //# sourceMappingURL=auth.controller.js.map

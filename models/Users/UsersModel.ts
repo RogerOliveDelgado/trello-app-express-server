@@ -32,6 +32,7 @@ const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
   password: {
     type: String,
     required: [true, "Password required"],
+    select: false,
   },
   role: {
     type: String,
@@ -49,15 +50,16 @@ const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
   ],
 });
 
-UserSchema.method('comparePassword', async function (
-  candidatePassword: string
-): Promise<boolean> {
-  try {
-    return await bcrypt.compare(candidatePassword, this.password);
-  } catch (error) {
-    return false;
+UserSchema.method(
+  "comparePassword",
+  async function (candidatePassword: string): Promise<boolean> {
+    try {
+      return await bcrypt.compare(candidatePassword, this.password);
+    } catch (error) {
+      return false;
+    }
   }
-});
+);
 
 UserSchema.pre("save", async function (next: NextFunction) {
   if (!this.isModified("password")) {
@@ -70,6 +72,14 @@ UserSchema.pre("save", async function (next: NextFunction) {
   } catch (error) {
     return next(error);
   }
+});
+
+UserSchema.set("toJSON", {
+  transform: (_: unknown, result: { password?: string; __v?: number }) => {
+    delete result.password;
+    delete result.__v;
+    return result;
+  },
 });
 
 const UserModel = model<IUser, UserModel>("User", UserSchema);
