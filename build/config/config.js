@@ -20,7 +20,7 @@ const CONFIG = {
             debug: logger.debug,
         },
         db: {
-            url: process.env.DB_URL,
+            url: process.env.MONGO_ATLAS_URI,
         },
     },
     development: {
@@ -36,7 +36,7 @@ const CONFIG = {
             debug: logger.debug,
         },
         db: {
-            url: process.env.DB_URL,
+            url: process.env.MONGO_ATLAS_URI,
         },
     },
     test: {
@@ -52,7 +52,7 @@ const CONFIG = {
             debug: logger.debug,
         },
         db: {
-            url: process.env.DB_URL,
+            url: process.env.MONGO_ATLAS_URI,
         },
     },
 };

@@ -6,6 +6,10 @@ const BoardSchema = new Schema<IBoard>({
         type: String,
         required: [true, "Name required"]
     },
+    initDate: {
+        type: Date,
+        required: [true, "Initial Date required"]
+    },
     tasks: [{
         type: SchemaTypes.ObjectId,
         default: [],

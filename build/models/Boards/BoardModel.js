@@ -6,6 +6,10 @@ const BoardSchema = new mongoose_1.Schema({
         type: String,
         required: [true, "Name required"]
     },
+    initDate: {
+        type: Date,
+        required: [true, "Initial Date required"]
+    },
     tasks: [{
             type: mongoose_1.SchemaTypes.ObjectId,
             default: [],
