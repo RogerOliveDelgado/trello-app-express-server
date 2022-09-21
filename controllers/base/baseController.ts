@@ -13,7 +13,7 @@ const create =
 
       res.status(200).send({ ok: true, data: sanitizeDoc });
     } catch (error) {
-      res.status(400).send({ ok: false, msg: "Element cannot be created" });
+      res.status(400).send({ ok: false, msg: error.message });
     }
   };
 
