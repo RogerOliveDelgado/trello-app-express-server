@@ -4,11 +4,10 @@ exports.taskRouter = void 0;
 const tslib_1 = require("tslib");
 const express_1 = require("express");
 const baseController_1 = require("../../controllers/base/baseController");
-const authenticate_1 = require("../../middleware/authenticate");
 const TasksModel_1 = tslib_1.__importDefault(require("../../models/Tasks/TasksModel"));
 const taskRouter = (0, express_1.Router)();
 exports.taskRouter = taskRouter;
-taskRouter.use(authenticate_1.autheticate);
+// taskRouter.use(authenticate)
 taskRouter.post('', (0, baseController_1.create)(TasksModel_1.default));
 taskRouter.get('/:id', (0, baseController_1.read)(TasksModel_1.default));
 taskRouter.post('/:id', (0, baseController_1.update)(TasksModel_1.default));

@@ -7,11 +7,11 @@ import {
 } from "../../controllers/base/baseController";
 import { Router } from "express";
 import UserModel from "../../models/Users/UsersModel";
-import { autheticate } from "../../middleware/authenticate";
+import { authenticate } from "../../middleware/authenticate";
 
 const userRouter = Router();
 
-userRouter.use(autheticate);
+// userRouter.use(authenticate);
 
 userRouter.post("", create(UserModel));
 userRouter.get("/:id", read(UserModel));

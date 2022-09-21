@@ -7,7 +7,7 @@ export default interface AuthRequest extends Request {
   user: string | JwtPayload;
 }
 
-const autheticate = async (
+const authenticate = async (
   req: AuthRequest,
   res: Response,
   next: NextFunction
@@ -27,4 +27,4 @@ const autheticate = async (
   });
 };
 
-export { autheticate };
+export { authenticate };

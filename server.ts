@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from "express";
+import express, { Express } from "express";
 import dotenv from "dotenv";
 import helmet from "helmet";
 import morgan from "morgan";
@@ -8,7 +8,6 @@ import {
   taskRouter,
   userRouter,
 } from "./routers/index";
-import { autheticate } from "./middleware/authenticate";
 
 dotenv.config();
 
@@ -26,6 +25,5 @@ app.use("/task", taskRouter);
 app.use("/", (_req, res) => {
   res.send("TrelloApp Server");
 });
-
 
 export default app;

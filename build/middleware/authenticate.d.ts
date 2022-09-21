@@ -3,5 +3,5 @@ import { JwtPayload } from "jsonwebtoken";
 export default interface AuthRequest extends Request {
     user: string | JwtPayload;
 }
-declare const autheticate: (req: AuthRequest, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>;
-export { autheticate };
+declare const authenticate: (req: AuthRequest, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>>>;
+export { authenticate };

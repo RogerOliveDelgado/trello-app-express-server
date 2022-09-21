@@ -1,11 +1,11 @@
 import { Router } from "express";
 import {create, read, update, remove, readAll} from '../../controllers/base/baseController'
-import { autheticate } from "../../middleware/authenticate";
+import { authenticate } from "../../middleware/authenticate";
 import TaskModel from '../../models/Tasks/TasksModel';
 
 const taskRouter = Router();
 
-taskRouter.use(autheticate)
+// taskRouter.use(authenticate)
 
 taskRouter.post('', create(TaskModel))
 taskRouter.get('/:id', read(TaskModel))

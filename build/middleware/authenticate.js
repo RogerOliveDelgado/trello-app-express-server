@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.autheticate = void 0;
+exports.authenticate = void 0;
 const tslib_1 = require("tslib");
 const jsonwebtoken_1 = require("jsonwebtoken");
 const config_1 = tslib_1.__importDefault(require("../config/config"));
-const autheticate = async (req, res, next) => {
+const authenticate = async (req, res, next) => {
     const authorization = req.headers["authorization"];
     if (!authorization)
         return res.status(401).send({ ok: false });
@@ -18,5 +18,5 @@ const autheticate = async (req, res, next) => {
         }
     });
 };
-exports.autheticate = autheticate;
+exports.authenticate = authenticate;
 //# sourceMappingURL=authenticate.js.map
