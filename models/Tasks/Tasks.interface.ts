@@ -7,7 +7,7 @@ export default interface ITask {
     employees: User[]
     initDate: Date
     endDate: Date
-    boardRefID: Board,
+    board: Board,
     state: TaskState
     tags?: Tag[]
 }

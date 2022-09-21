@@ -23,7 +23,7 @@ const TaskSchema = new Schema<ITask>({
         type: Date,
         required: [true, "endDate required"]
     },
-    boardRefID: {
+    board: {
         type: SchemaTypes.ObjectId,
         ref: "Board",
         required: [true, "BoardID required"]
