@@ -12,7 +12,8 @@ const app = (0, express_1.default)();
 app.use((0, morgan_1.default)("dev"));
 app.use((0, helmet_1.default)());
 app.use((0, cors_1.default)());
-app.use(express_1.default.json());
+app.use(express_1.default.json({ limit: '50mb' }));
+app.use(express_1.default.urlencoded({ limit: '50mb' }));
 //Routers
 app.use("/auth", index_1.authRouter);
 app.use("/user", index_1.userRouter);

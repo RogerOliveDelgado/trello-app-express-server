@@ -1,6 +1,7 @@
 import { Model } from "mongoose";
 import { NextFunction, Request, Response } from "express";
 import AuthRequest from "../../middleware/authenticate";
+import cloudinaryAuth from '../../utils/cloudinary'
 
 const create =
   <T>(model: Model<T>) =>
@@ -47,8 +48,20 @@ const update =
   async (req: AuthRequest, res: Response, _next: NextFunction) => {
     const { id } = req.params;
     const body = { ...req.body } as T;
-
+    
     try {
+      const fileImage = req.body?.profilePicture;
+      let uploadResponseCloudinary:any;
+
+      if(fileImage != undefined){ 
+        uploadResponseCloudinary = await cloudinaryAuth.uploader.upload(fileImage, {
+          upload_preset: 'profile'
+        },function(_error, result) {console.log(result); });
+        console.log(uploadResponseCloudinary);
+        body["profilePicture"] != undefined && uploadResponseCloudinary.url_secure;
+        
+      }  
+
       const doc = await model
         .findByIdAndUpdate(id, { $set: { ...body } }, { new: true })
         .lean()
