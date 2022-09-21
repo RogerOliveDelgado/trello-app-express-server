@@ -16,5 +16,8 @@ app.use("/auth", index_1.authRouter);
 app.use("/user", index_1.userRouter);
 app.use("/board", index_1.boardRouter);
 app.use("/task", index_1.taskRouter);
+app.use("/", (_req, res) => {
+    res.send("TrelloApp Server");
+});
 exports.default = app;
 //# sourceMappingURL=server.js.map
