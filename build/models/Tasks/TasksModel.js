@@ -23,7 +23,7 @@ const TaskSchema = new mongoose_1.Schema({
         type: Date,
         required: [true, "endDate required"]
     },
-    boardRefID: {
+    board: {
         type: mongoose_1.SchemaTypes.ObjectId,
         ref: "Board",
         required: [true, "BoardID required"]

@@ -51,13 +51,13 @@ const update =
     
     try {
       const fileImage = req.body?.profilePicture;
-      let uploadResponseCloudinary:any;
+      let uploadResponseCloudinary;
 
       if(fileImage != undefined){ 
         uploadResponseCloudinary = await cloudinaryAuth.uploader.upload(fileImage, {
           upload_preset: 'profile'
-        },function(_error, result) {console.log(result); });
-        console.log(uploadResponseCloudinary);
+        },function(_error, result) {console.log(result);});
+        console.log(typeof uploadResponseCloudinary);
         body["profilePicture"] != undefined && uploadResponseCloudinary.url_secure;
         
       }  

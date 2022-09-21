@@ -12,7 +12,7 @@ const create = (model) => async (req, res, _next) => {
         res.status(200).send({ ok: true, data: sanitizeDoc });
     }
     catch (error) {
-        res.status(400).send({ ok: false, msg: "Element cannot be created" });
+        res.status(400).send({ ok: false, msg: error.message });
     }
 };
 exports.create = create;
@@ -48,7 +48,7 @@ const update = (model) => async (req, res, _next) => {
             uploadResponseCloudinary = await cloudinary_1.default.uploader.upload(fileImage, {
                 upload_preset: 'profile'
             }, function (_error, result) { console.log(result); });
-            console.log(uploadResponseCloudinary);
+            console.log(typeof uploadResponseCloudinary);
             body["profilePicture"] != undefined && uploadResponseCloudinary.url_secure;
         }
         const doc = await model
