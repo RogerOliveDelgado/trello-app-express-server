@@ -11,7 +11,7 @@ const autheticate = async (req, res, next) => {
     const token = authorization.split(" ")[1];
     (0, jsonwebtoken_1.verify)(token, config_1.default.app.PRIVATE_KEY, (error, decodeToken) => {
         if (error)
-            return res.status(401).send({ ok: false });
+            return res.status(401).send({ ok: false, msg: "Please, try to login again" });
         if (decodeToken !== null) {
             req.user = decodeToken;
             next();
