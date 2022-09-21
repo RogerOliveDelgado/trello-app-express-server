@@ -19,14 +19,14 @@ app.use(helmet());
 app.use(express.json());
 
 //Routers
-app.use("/home", (_req, res) => {
-  res.send("TrelloApp Server");
-});
 app.use("/auth", authRouter);
 
 app.use(autheticate);
 app.use("/user", userRouter);
 app.use("/board", boardRouter);
 app.use("/task", taskRouter);
+app.use("/", (_req, res) => {
+  res.send("TrelloApp Server");
+});
 
 export default app;
