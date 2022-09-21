@@ -22,7 +22,7 @@ const CONFIG: GenericConfig = {
       debug: logger.debug,
     },
     db: {
-      url: process.env.MONGO_ATLAS_URI,
+      url: process.env.DB_URL,
     },
   },
   development: {
@@ -38,7 +38,7 @@ const CONFIG: GenericConfig = {
       debug: logger.debug,
     },
     db: {
-      url: process.env.MONGO_ATLAS_URI,
+      url: process.env.DB_URL,
     },
   },
   test: {
@@ -54,7 +54,7 @@ const CONFIG: GenericConfig = {
       debug: logger.debug,
     },
     db: {
-      url: process.env.MONGO_ATLAS_URI,
+      url: process.env.DB_URL,
     },
   },
 };
