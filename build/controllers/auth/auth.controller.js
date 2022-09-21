@@ -28,7 +28,7 @@ const signInUser = async (req, res, _next) => {
             name: userLogged.firstName,
         };
         const token = await (0, jsonwebtoken_1.sign)(tokenPayload, config_1.default.app.PRIVATE_KEY, {
-            expiresIn: "10s",
+            expiresIn: "3600s",
         });
         return res.status(200).send({ ok: true, data: { jwt: token } });
     }

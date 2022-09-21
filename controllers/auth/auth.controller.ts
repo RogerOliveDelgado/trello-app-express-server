@@ -33,7 +33,7 @@ const signInUser = async (req: Request, res: Response, _next: NextFunction) => {
     };
 
     const token = await sign(tokenPayload, config.app.PRIVATE_KEY, {
-      expiresIn: "10s",
+      expiresIn: "3600s",
     });
 
     return res.status(200).send({ ok: true, data: { jwt: token } });
