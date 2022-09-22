@@ -4,6 +4,8 @@ import AuthRequest from "../../middleware/authenticate";
 import cloudinaryAuth from '../../utils/cloudinary'
 import BoardModel from '../../models/Boards/BoardModel'
 import UserModel from "../../models/Users/UsersModel";
+import TaskModel from "../../models/Tasks/TasksModel";
+import ITask from "../../models/Tasks/Tasks.interface";
 
 const create =
   <T>(model: Model<T>) =>
@@ -24,31 +26,50 @@ const create =
 
     if(body["employees"]){
       const employees = [body["employees"]]
-      console.log(typeof employees);
       
       try {
         //Llegaran varios empleados hay que hacer un map y comprobar si alguno no existe se manda el error
-        const exist = await UserModel.findById(`${body["employees"]}`).lean().exec();
-        if(exist == null){
-          res.status(400).send({ok: false, msg: "The user selected does not exists"})
-          return
-        }
+        employees.map(async(employee) => {
+          const exist = await UserModel.findById(employee).lean().exec();
+          if(exist == null){
+            res.status(400).send({ok: false, msg: "The user selected does not exists"})
+            return            
+          }else{
+            if(employee == employees[employees.length-1]){
+              createPrueba(model, {...req.body}, res)
+            }
+          }
+        }); 
       } catch (error) {
         return res.status(400).send(error)
       }
     }
+
+
+    // try {      
+    //   const doc = await model.create(body);
+    //   const sanitizeDoc: T = doc.toObject();
+    //   "password" in sanitizeDoc && delete sanitizeDoc["password"];
+
+    //   res.status(200).send({ ok: true, data: sanitizeDoc });
+    // } catch (error) {
+    //   res.status(400).send({ ok: false, msg: error.message });
+    // }
+  };
+
+  const createPrueba = async <T>(model: Model<T>, body:T, response:Response) => {
+    console.log("HOLA");
     
-    try {
+    try {      
       const doc = await model.create(body);
       const sanitizeDoc: T = doc.toObject();
       "password" in sanitizeDoc && delete sanitizeDoc["password"];
 
-      res.status(200).send({ ok: true, data: sanitizeDoc });
+      response.status(200).send({ ok: true, data: sanitizeDoc });
     } catch (error) {
-      res.status(400).send({ ok: false, msg: error.message });
+      response.status(400).send({ ok: false, msg: error.message });
     }
-  };
-
+  }
 const read =
   <T>(model: Model<T>) =>
   async (req: AuthRequest, res: Response, _next: NextFunction) => {
