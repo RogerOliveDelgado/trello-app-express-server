@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const mongoose_1 = require("mongoose");
 const bcrypt_1 = tslib_1.__importDefault(require("bcrypt"));
+const populate_1 = tslib_1.__importDefault(require("../../utils/populate"));
 const UserSchema = new mongoose_1.Schema({
     firstName: {
         type: String,
@@ -27,6 +28,7 @@ const UserSchema = new mongoose_1.Schema({
     password: {
         type: String,
         required: [true, "Password required"],
+        select: false,
     },
     role: {
         type: String,
@@ -43,7 +45,7 @@ const UserSchema = new mongoose_1.Schema({
         },
     ],
 });
-UserSchema.method('comparePassword', async function (candidatePassword) {
+UserSchema.method("comparePassword", async function (candidatePassword) {
     try {
         return await bcrypt_1.default.compare(candidatePassword, this.password);
     }
@@ -63,6 +65,15 @@ UserSchema.pre("save", async function (next) {
     catch (error) {
         return next(error);
     }
+});
+UserSchema.pre("find", (0, populate_1.default)("tasks"));
+UserSchema.pre("findOne", (0, populate_1.default)("tasks"));
+UserSchema.set("toJSON", {
+    transform: (_, result) => {
+        delete result.password;
+        delete result.__v;
+        return result;
+    },
 });
 const UserModel = (0, mongoose_1.model)("User", UserSchema);
 exports.default = UserModel;

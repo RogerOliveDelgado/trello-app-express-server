@@ -1,7 +1,7 @@
-import Task from "../Tasks/Tasks.interface"
+import ITask from "../Tasks/Tasks.interface"
 
 export default interface IBoard{
     name: string,
     initDate: Date,
-    tasks : Task[]
+    tasks : ITask[]
 }

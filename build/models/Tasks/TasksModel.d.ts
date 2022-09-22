@@ -23,6 +23,6 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose" />
 /// <reference types="mongoose/types/inferschematype" />
-import ITask from './Tasks.interface';
+import ITask from "./Tasks.interface";
 declare const TaskModel: import("mongoose").Model<ITask, {}, {}, {}, any>;
 export default TaskModel;

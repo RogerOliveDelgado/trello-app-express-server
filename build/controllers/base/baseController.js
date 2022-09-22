@@ -7,30 +7,33 @@ const create = (model) => async (req, res, _next) => {
     const body = { ...req.body };
     try {
         const doc = await model.create(body);
-        const sanitizeDoc = doc.toObject();
-        "password" in sanitizeDoc && delete sanitizeDoc["password"];
-        res.status(200).send({ ok: true, data: sanitizeDoc });
+        res.status(200).send({ ok: true, data: doc });
     }
     catch (error) {
         res.status(400).send({ ok: false, msg: error.message });
     }
 };
 exports.create = create;
-const read = (model) => async (req, res, _next) => {
-    const { id } = req.params;
+const read = (model) => async ({ params: { id: _id } }, res, _next) => {
     try {
-        const doc = await model.findById(id, "-password").lean().exec();
+        const doc = await model.findOne({ _id }).lean().exec();
+        if (!doc)
+            return res.status(400).send({ ok: false, msg: "Cannot read a document that not exist" });
         res.status(200).send({ ok: true, data: doc });
     }
     catch (error) {
         console.log(error);
-        res.status(400).send({ ok: false, msg: "Element cannot be found" });
+        res.status(400).send({ ok: false, msg: error.message });
     }
 };
 exports.read = read;
-const readAll = (model) => async (_req, res, _next) => {
+const readAll = (model) => async ({ query }, res, _next) => {
+    const filter = query;
     try {
-        const doc = await model.find({}, "-password").lean().exec();
+        const doc = await model
+            .find({ ...filter })
+            .lean()
+            .exec();
         res.status(200).send({ ok: true, data: doc });
     }
     catch (error) {
@@ -40,7 +43,7 @@ const readAll = (model) => async (_req, res, _next) => {
 exports.readAll = readAll;
 const urlProfilePictureCloudinary = async (imageInfo, body) => {
     const cloudInfo = await cloudinary_1.default.uploader.upload(imageInfo, {
-        upload_preset: 'photos'
+        upload_preset: "photos",
     }, function (_error, result) {
         body["profilePicture"] = result.secure_url;
         return body;
@@ -60,7 +63,8 @@ const update = (model) => async (req, res, _next) => {
             .findByIdAndUpdate(id, { $set: { ...body } }, { new: true })
             .lean()
             .exec();
-        "password" in doc && delete doc["password"];
+        if (!doc)
+            return res.status(400).send({ ok: false, msg: "Cannot update a document that not exist" });
         res.status(200).send({ ok: true, data: doc });
     }
     catch (error) {
@@ -68,10 +72,11 @@ const update = (model) => async (req, res, _next) => {
     }
 };
 exports.update = update;
-const remove = (model) => async (req, res, _next) => {
-    const { id } = req.params;
+const remove = (model) => async ({ params: { id } }, res, _next) => {
     try {
         const doc = await model.findByIdAndDelete(id);
+        if (!doc)
+            return res.status(400).send({ ok: false, msg: `Cannot delete a that does not exist` });
         res.status(200).send({ ok: true, msg: "Element deleted succesfully" });
     }
     catch (error) {

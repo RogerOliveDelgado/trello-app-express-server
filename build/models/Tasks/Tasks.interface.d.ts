@@ -1,12 +1,12 @@
-import User from '../Users/Users.interface';
-import Board from '../Boards/Board.interface';
+import User from "../Users/Users.interface";
+import IBoard from "../Boards/Board.interface";
 export default interface ITask {
     title: string;
     description: string;
     employees: User[];
     initDate: Date;
     endDate: Date;
-    board: Board;
+    board: IBoard;
     state: TaskState;
     tags?: Tag[];
 }
