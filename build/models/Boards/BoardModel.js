@@ -18,8 +18,15 @@ const BoardSchema = new mongoose_1.Schema({
         },
     ],
 });
-// BoardSchema.pre("find", autoPopulate("tasks"));
-// BoardSchema.pre("findOne", autoPopulate("tasks"));
+// BoardSchema.pre("find", function (next: NextFunction) {
+// 	console.log(this);
+// 	this.populate("tasks");
+// 	next();
+// });
+// BoardSchema.pre("findOne", function(next: NextFunction){
+// 	this.populate("tasks");
+// 	next();
+// });
 const BoardModel = (0, mongoose_1.model)("Board", BoardSchema);
 exports.default = BoardModel;
 //# sourceMappingURL=BoardModel.js.map

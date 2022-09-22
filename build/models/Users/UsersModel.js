@@ -65,8 +65,14 @@ UserSchema.pre("save", async function (next) {
         return next(error);
     }
 });
-// UserSchema.pre("find", autoPopulate("tasks"));
-// UserSchema.pre("findOne", autoPopulate("tasks"));
+// UserSchema.pre("find", function (next: NextFunction) {
+// 	this.populate("tasks");
+// 	next();
+// });
+// UserSchema.pre("findOne", function (next: NextFunction) {
+// 	this.populate("tasks");
+// 	next();
+// });
 UserSchema.set("toJSON", {
     transform: (_, result) => {
         delete result.password;

@@ -64,8 +64,14 @@ TaskSchema.pre("save", async function (next) {
 // 		next(error);
 // 	}
 // });
-// TaskSchema.pre("find", autoPopulate(["board", "employees"]));
-// TaskSchema.pre("findOne", autoPopulate(["board", "employees"]));
+// TaskSchema.pre("find", function (next: NextFunction) {
+// 	this.populate("board");
+// 	next();
+// });
+// TaskSchema.pre("findOne", function (next: NextFunction) {
+// 	this.populate("board");
+// 	next();
+// });
 const TaskModel = (0, mongoose_1.model)("Task", TaskSchema);
 exports.default = TaskModel;
 //# sourceMappingURL=TasksModel.js.map

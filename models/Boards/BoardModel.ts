@@ -1,6 +1,7 @@
 import { Schema, model, SchemaTypes } from "mongoose";
 import IBoard from "./Board.interface";
 import autoPopulate from "../../utils/populate";
+import { NextFunction } from 'express';
 
 const BoardSchema = new Schema<IBoard>({
 	name: {
@@ -20,8 +21,15 @@ const BoardSchema = new Schema<IBoard>({
 	],
 });
 
-// BoardSchema.pre("find", autoPopulate("tasks"));
-// BoardSchema.pre("findOne", autoPopulate("tasks"));
+// BoardSchema.pre("find", function (next: NextFunction) {
+// 	console.log(this);
+// 	this.populate("tasks");
+// 	next();
+// });
+// BoardSchema.pre("findOne", function(next: NextFunction){
+// 	this.populate("tasks");
+// 	next();
+// });
 
 
 const BoardModel = model<IBoard>("Board", BoardSchema);
