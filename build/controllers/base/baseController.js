@@ -3,8 +3,34 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.readAll = exports.remove = exports.update = exports.read = exports.create = void 0;
 const tslib_1 = require("tslib");
 const cloudinary_1 = tslib_1.__importDefault(require("../../utils/cloudinary"));
+const BoardModel_1 = tslib_1.__importDefault(require("../../models/Boards/BoardModel"));
+const UsersModel_1 = tslib_1.__importDefault(require("../../models/Users/UsersModel"));
 const create = (model) => async (req, res, _next) => {
     const body = { ...req.body };
+    if (body["board"]) {
+        try {
+            const exist = await BoardModel_1.default.findById(`${body["board"]}`).lean().exec();
+            if (exist == null) {
+                res.status(400).send({ ok: false, msg: "The project selected does not exists" });
+                return;
+            }
+        }
+        catch (error) {
+            res.status(400).send(error);
+        }
+    }
+    if (body["employees"]) {
+        try {
+            const exist = await UsersModel_1.default.findById(`${body["employees"]}`).lean().exec();
+            if (exist == null) {
+                res.status(400).send({ ok: false, msg: "The user selected does not exists" });
+                return;
+            }
+        }
+        catch (error) {
+            res.status(400).send(error);
+        }
+    }
     try {
         const doc = await model.create(body);
         const sanitizeDoc = doc.toObject();

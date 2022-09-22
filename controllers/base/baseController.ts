@@ -1,12 +1,39 @@
-import { Model} from "mongoose";
+import mongoose, { Model} from "mongoose";
 import { NextFunction, Request, Response } from "express";
 import AuthRequest from "../../middleware/authenticate";
 import cloudinaryAuth from '../../utils/cloudinary'
+import BoardModel from '../../models/Boards/BoardModel'
+import UserModel from "../../models/Users/UsersModel";
 
 const create =
   <T>(model: Model<T>) =>
   async (req: AuthRequest, res: Response, _next: NextFunction) => {
     const body = { ...req.body } as T;
+    
+    if(body["board"]){
+      try{
+        const exist = await BoardModel.findById(`${body["board"]}`).lean().exec();
+        if(exist == null){
+          res.status(400).send({ok: false, msg: "The project selected does not exists"})
+          return
+        }
+      }catch(error){        
+        res.status(400).send(error)
+      }
+    }
+
+    if(body["employees"]){
+      try {
+        const exist = await UserModel.findById(`${body["employees"]}`).lean().exec();
+        if(exist == null){
+          res.status(400).send({ok: false, msg: "The user selected does not exists"})
+          return
+        }
+      } catch (error) {
+        res.status(400).send(error)
+      }
+    }
+    
     try {
       const doc = await model.create(body);
       const sanitizeDoc: T = doc.toObject();
