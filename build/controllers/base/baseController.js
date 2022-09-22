@@ -1,12 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.readAll = exports.remove = exports.update = exports.read = exports.create = void 0;
-const create = (model) => async (req, res, _next) => {
-    const body = { ...req.body };
+const create = (model) => async ({ body }, res, _next) => {
     try {
         const doc = await model.create(body);
-        // const sanitizeDoc: T = doc.toObject();
-        // "password" in sanitizeDoc && delete sanitizeDoc["password"];
         res.status(200).send({ ok: true, data: doc });
     }
     catch (error) {
@@ -14,8 +11,7 @@ const create = (model) => async (req, res, _next) => {
     }
 };
 exports.create = create;
-const read = (model) => async (req, res, _next) => {
-    const { id } = req.params;
+const read = (model) => async ({ params: { id } }, res, _next) => {
     try {
         const doc = await model.findById(id).lean().exec();
         res.status(200).send({ ok: true, data: doc });
@@ -26,9 +22,13 @@ const read = (model) => async (req, res, _next) => {
     }
 };
 exports.read = read;
-const readAll = (model) => async (_req, res, _next) => {
+const readAll = (model) => async ({ query }, res, _next) => {
+    const filter = query;
     try {
-        const doc = await model.find({}).lean().exec();
+        const doc = await model
+            .find({ ...filter })
+            .lean()
+            .exec();
         res.status(200).send({ ok: true, data: doc });
     }
     catch (error) {
@@ -36,9 +36,7 @@ const readAll = (model) => async (_req, res, _next) => {
     }
 };
 exports.readAll = readAll;
-const update = (model) => async (req, res, _next) => {
-    const { id } = req.params;
-    const body = { ...req.body };
+const update = (model) => async ({ params: { id }, body }, res, _next) => {
     try {
         const doc = await model
             .findByIdAndUpdate(id, { $set: { ...body } }, { new: true })
@@ -51,8 +49,7 @@ const update = (model) => async (req, res, _next) => {
     }
 };
 exports.update = update;
-const remove = (model) => async (req, res, _next) => {
-    const { id } = req.params;
+const remove = (model) => async ({ params: { id } }, res, _next) => {
     try {
         const doc = await model.findByIdAndDelete(id);
         res.status(200).send({ ok: true, msg: "Element deleted succesfully" });

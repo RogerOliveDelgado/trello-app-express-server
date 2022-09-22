@@ -1,8 +1,7 @@
 import {
   Schema,
   model,
-  SchemaTypes,
-  CallbackWithoutResultAndOptionalError,
+  SchemaTypes
 } from "mongoose";
 import IUser, { IUserMethods, UserModel } from "./Users.interface";
 import bcrypt from "bcrypt";
@@ -73,6 +72,7 @@ UserSchema.pre("save", async function (next: NextFunction) {
     return next(error);
   }
 });
+
 
 UserSchema.set("toJSON", {
   transform: (_: unknown, result: { password?: string; __v?: number }) => {

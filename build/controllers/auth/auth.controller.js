@@ -14,15 +14,11 @@ const signInUser = async (req, res, _next) => {
     try {
         const user = await UsersModel_1.default.findOne({ email: email }).exec();
         if (!user)
-            return res
-                .status(400)
-                .json({ ok: false, msg: "User not registered. Please sign up" });
+            return res.status(400).json({ ok: false, msg: "User not registered. Please sign up" });
         const userLogged = new UsersModel_1.default(user);
         const isValidPassword = await userLogged.comparePassword(password);
         if (!isValidPassword)
-            return res
-                .status(400)
-                .json({ ok: false, msg: "Email or password are not valid" });
+            return res.status(400).json({ ok: false, msg: "Email or password are not valid" });
         const tokenPayload = {
             sub: userLogged._id,
             name: userLogged.firstName,
@@ -40,13 +36,7 @@ exports.signInUser = signInUser;
 //Function to SignUp user
 const signUpUser = async (req, res) => {
     const { firstName, lastName, address, birthday, email, password, role } = req.body;
-    if (!firstName ||
-        !lastName ||
-        !address ||
-        !birthday ||
-        !email ||
-        !password ||
-        !role)
+    if (!firstName || !lastName || !address || !birthday || !email || !password || !role)
         return res.status(400).json({ ok: false, msg: "All fields are required" });
     try {
         const emailExist = await UsersModel_1.default.findOne({ email: email });
@@ -61,8 +51,6 @@ const signUpUser = async (req, res) => {
             password,
             role,
         });
-        //TODO: Remove password from user to send it back to the client
-        //delete newUser.delete;
         const tokenPayload = {
             sub: newUser._id,
             name: newUser.firstName,
@@ -72,7 +60,7 @@ const signUpUser = async (req, res) => {
         });
         return res.status(200).send({
             ok: true,
-            data: { firstName, lastName, address, birthday, email, role },
+            data: { newUser, jwt: token },
         });
     }
     catch (error) {
