@@ -47,6 +47,7 @@ const TaskSchema = new Schema<ITask>({
 TaskSchema.pre("save", async function (next: NextFunction) {
 	try {
 		const boardToUpdate = await BoardModel.findOne({ _id: this.board });
+		console.log('loop');
 		boardToUpdate.tasks.push(this);
 		await boardToUpdate.save();
 		next();

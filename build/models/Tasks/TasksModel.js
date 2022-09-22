@@ -45,6 +45,7 @@ const TaskSchema = new mongoose_1.Schema({
 TaskSchema.pre("save", async function (next) {
     try {
         const boardToUpdate = await BoardModel_1.default.findOne({ _id: this.board });
+        console.log('loop');
         boardToUpdate.tasks.push(this);
         await boardToUpdate.save();
         next();

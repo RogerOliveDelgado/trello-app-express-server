@@ -21,15 +21,14 @@ const BoardSchema = new Schema<IBoard>({
 	],
 });
 
-// BoardSchema.pre("find", function (next: NextFunction) {
-// 	console.log(this);
-// 	this.populate("tasks");
-// 	next();
-// });
-// BoardSchema.pre("findOne", function(next: NextFunction){
-// 	this.populate("tasks");
-// 	next();
-// });
+BoardSchema.pre("find", function (next: NextFunction) {
+	this.populate("tasks");
+	next();
+});
+BoardSchema.pre("findOne", function(next: NextFunction){
+	this.populate("tasks");
+	next();
+});
 
 
 const BoardModel = model<IBoard>("Board", BoardSchema);
