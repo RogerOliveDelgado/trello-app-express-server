@@ -16,13 +16,13 @@ const create =
 
 const read =
 	<T>(model: Model<T>) =>
-	async ({ params: { id } }: AuthRequest, res: Response, _next: NextFunction) => {
+	async ({ params: { id: _id } }: AuthRequest, res: Response, _next: NextFunction) => {
 		try {
-			const doc = await model.findById(id).lean().exec();
+			const doc = await model.findOne({ _id }).lean().exec();
 			res.status(200).send({ ok: true, data: doc });
 		} catch (error) {
 			console.log(error);
-			res.status(400).send({ ok: false, msg: "Element cannot be found" });
+			res.status(400).send({ ok: false, msg: error.message });
 		}
 	};
 
@@ -66,20 +66,5 @@ const remove =
 			res.status(400).send({ ok: false, msg: "Element cannot be deleted" });
 		}
 	};
-
-// const filter =
-// 	<T>(model: Model<T>) =>
-// 	async ({ query }: Request, res: Response, _next: NextFunction) => {
-// 		const { ...filter } = query as T;
-// 		try {
-// 			const doc = await model
-// 				.find({ ...filter })
-// 				.lean()
-// 				.exec();
-// 			res.status(200).send({ ok: true, msg: "Element deleted succesfully" });
-// 		} catch (error) {
-// 			res.status(400).send({ ok: false, msg: "Element cannot be deleted" });
-// 		}
-// 	};
 
 export { create, read, update, remove, readAll };

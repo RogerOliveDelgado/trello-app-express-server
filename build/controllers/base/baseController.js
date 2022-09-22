@@ -11,14 +11,14 @@ const create = (model) => async ({ body }, res, _next) => {
     }
 };
 exports.create = create;
-const read = (model) => async ({ params: { id } }, res, _next) => {
+const read = (model) => async ({ params: { id: _id } }, res, _next) => {
     try {
-        const doc = await model.findById(id).lean().exec();
+        const doc = await model.findOne({ _id }).lean().exec();
         res.status(200).send({ ok: true, data: doc });
     }
     catch (error) {
         console.log(error);
-        res.status(400).send({ ok: false, msg: "Element cannot be found" });
+        res.status(400).send({ ok: false, msg: error.message });
     }
 };
 exports.read = read;

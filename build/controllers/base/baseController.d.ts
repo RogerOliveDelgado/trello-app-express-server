@@ -1,3 +1,4 @@
+/// <reference types="mongoose/types/models" />
 import { Model } from "mongoose";
 import { NextFunction, Response } from "express";
 import AuthRequest from "../../middleware/authenticate";

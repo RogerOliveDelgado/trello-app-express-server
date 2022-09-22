@@ -12,6 +12,10 @@ const BoardSchema = new mongoose_1.Schema({
             ref: "Task"
         }]
 });
+BoardSchema.pre("findOne", function (next) {
+    this.populate("tasks");
+    next();
+});
 const BoardModel = (0, mongoose_1.model)("Board", BoardSchema);
 exports.default = BoardModel;
 //# sourceMappingURL=BoardModel.js.map

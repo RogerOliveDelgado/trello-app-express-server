@@ -13,6 +13,11 @@ const BoardSchema = new Schema<IBoard>({
     }]
 })
 
+BoardSchema.pre("findOne", function (next) {
+	this.populate("tasks");
+	next();
+});
+
 const BoardModel = model<IBoard>("Board", BoardSchema)
 
 export default BoardModel
