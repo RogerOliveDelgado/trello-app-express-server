@@ -1,4 +1,4 @@
-import { Model } from "mongoose";
+import { Model} from "mongoose";
 import { NextFunction, Request, Response } from "express";
 import AuthRequest from "../../middleware/authenticate";
 import cloudinaryAuth from '../../utils/cloudinary'
@@ -43,6 +43,16 @@ const readAll =
     }
   };
 
+const urlProfilePictureCloudinary = async <T>(imageInfo: string, body:T) => {
+    const cloudInfo = await cloudinaryAuth.uploader.upload(imageInfo, {
+      upload_preset: 'photos'
+    },function(_error, result) {
+      body["profilePicture"] = result.secure_url;
+      return body;
+    }); 
+    return cloudInfo;         
+}
+
 const update =
   <T>(model: Model<T>) =>
   async (req: AuthRequest, res: Response, _next: NextFunction) => {
@@ -51,16 +61,11 @@ const update =
     
     try {
       const fileImage = req.body?.profilePicture;
-      let uploadResponseCloudinary;
 
-      if(fileImage != undefined){ 
-        uploadResponseCloudinary = await cloudinaryAuth.uploader.upload(fileImage, {
-          upload_preset: 'profile'
-        },function(_error, result) {console.log(result);});
-        console.log(typeof uploadResponseCloudinary);
-        body["profilePicture"] != undefined && uploadResponseCloudinary.url_secure;
-        
-      }  
+      if(fileImage != undefined && fileImage != ""){
+        const dataBody = await urlProfilePictureCloudinary(req.body?.profilePicture,body);
+        body["profilePicture"] = dataBody.secure_url;
+      }
 
       const doc = await model
         .findByIdAndUpdate(id, { $set: { ...body } }, { new: true })
