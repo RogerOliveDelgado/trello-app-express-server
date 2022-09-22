@@ -9,7 +9,7 @@ const taskRouter = Router();
 
 taskRouter.post('', create(TaskModel))
 taskRouter.get('/:id', read(TaskModel))
-taskRouter.post('/:id', update(TaskModel))
+taskRouter.patch('/:id', update(TaskModel))
 taskRouter.delete('/:id', remove(TaskModel))
 taskRouter.get('', readAll(TaskModel))
 
