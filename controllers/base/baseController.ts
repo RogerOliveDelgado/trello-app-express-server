@@ -65,7 +65,7 @@ const urlProfilePictureCloudinary = async <T>(imageInfo: string, body: T) => {
 const update =
 	<T>(model: Model<T>) =>
 	async (req: AuthRequest, res: Response, _next: NextFunction) => {
-		const { id } = req.params;
+		const { id: _id } = req.params;
 		const body = { ...req.body } as T;
 
 		try {
@@ -77,7 +77,7 @@ const update =
 			}
 
 			const doc = await model
-				.findByIdAndUpdate(id, { $set: { ...body } }, { new: true })
+				.findOneAndUpdate({ _id }, { ...body }, { new: true })
 				.lean()
 				.exec();
 

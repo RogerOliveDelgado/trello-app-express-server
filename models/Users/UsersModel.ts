@@ -67,8 +67,8 @@ UserSchema.pre("save", async function (next: NextFunction) {
 	}
 });
 
-UserSchema.pre("find", autoPopulate("tasks"));
-UserSchema.pre("findOne", autoPopulate("tasks"));
+// UserSchema.pre("find", autoPopulate("tasks"));
+// UserSchema.pre("findOne", autoPopulate("tasks"));
 
 UserSchema.set("toJSON", {
 	transform: (_: unknown, result: { password?: string; __v?: number }) => {

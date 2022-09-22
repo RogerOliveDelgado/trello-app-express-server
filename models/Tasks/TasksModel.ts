@@ -55,8 +55,21 @@ TaskSchema.pre("save", async function (next: NextFunction) {
 	}
 });
 
-TaskSchema.pre("find", autoPopulate(["board", "employees"]));
-TaskSchema.pre("findOne", autoPopulate(["board", "employees"]));
+// TaskSchema.pre("findOneAndUpdate", async function (next: NextFunction) {
+// 	try {
+// 		const schema = this;
+
+// 		const boardToUpdate = await BoardModel.findOne({ _id: this.board });
+// 		boardToUpdate.tasks.push(this);
+// 		await boardToUpdate.save();
+// 		next();
+// 	} catch (error) {
+// 		next(error);
+// 	}
+// });
+
+// TaskSchema.pre("find", autoPopulate(["board", "employees"]));
+// TaskSchema.pre("findOne", autoPopulate(["board", "employees"]));
 
 const TaskModel = model<ITask>("Task", TaskSchema);
 

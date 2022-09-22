@@ -51,7 +51,7 @@ const urlProfilePictureCloudinary = async (imageInfo, body) => {
     return cloudInfo;
 };
 const update = (model) => async (req, res, _next) => {
-    const { id } = req.params;
+    const { id: _id } = req.params;
     const body = { ...req.body };
     try {
         const fileImage = req.body?.profilePicture;
@@ -60,7 +60,7 @@ const update = (model) => async (req, res, _next) => {
             body["profilePicture"] = dataBody.secure_url;
         }
         const doc = await model
-            .findByIdAndUpdate(id, { $set: { ...body } }, { new: true })
+            .findOneAndUpdate({ _id }, { ...body }, { new: true })
             .lean()
             .exec();
         if (!doc)

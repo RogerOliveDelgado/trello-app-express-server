@@ -20,8 +20,8 @@ const BoardSchema = new Schema<IBoard>({
 	],
 });
 
-BoardSchema.pre("find", autoPopulate("tasks"));
-BoardSchema.pre("findOne", autoPopulate("tasks"));
+// BoardSchema.pre("find", autoPopulate("tasks"));
+// BoardSchema.pre("findOne", autoPopulate("tasks"));
 
 
 const BoardModel = model<IBoard>("Board", BoardSchema);

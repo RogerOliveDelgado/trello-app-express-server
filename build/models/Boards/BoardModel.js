@@ -1,8 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const tslib_1 = require("tslib");
 const mongoose_1 = require("mongoose");
-const populate_1 = tslib_1.__importDefault(require("../../utils/populate"));
 const BoardSchema = new mongoose_1.Schema({
     name: {
         type: String,
@@ -20,8 +18,8 @@ const BoardSchema = new mongoose_1.Schema({
         },
     ],
 });
-BoardSchema.pre("find", (0, populate_1.default)("tasks"));
-BoardSchema.pre("findOne", (0, populate_1.default)("tasks"));
+// BoardSchema.pre("find", autoPopulate("tasks"));
+// BoardSchema.pre("findOne", autoPopulate("tasks"));
 const BoardModel = (0, mongoose_1.model)("Board", BoardSchema);
 exports.default = BoardModel;
 //# sourceMappingURL=BoardModel.js.map
