@@ -18,19 +18,23 @@ const create =
           return
         }
       }catch(error){        
-        res.status(400).send(error)
+        return res.status(400).send(error)
       }
     }
 
     if(body["employees"]){
+      const employees = [body["employees"]]
+      console.log(typeof employees);
+      
       try {
+        //Llegaran varios empleados hay que hacer un map y comprobar si alguno no existe se manda el error
         const exist = await UserModel.findById(`${body["employees"]}`).lean().exec();
         if(exist == null){
           res.status(400).send({ok: false, msg: "The user selected does not exists"})
           return
         }
       } catch (error) {
-        res.status(400).send(error)
+        return res.status(400).send(error)
       }
     }
     

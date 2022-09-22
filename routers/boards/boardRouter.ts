@@ -9,7 +9,7 @@ const boardRouter = Router();
 
 boardRouter.post('', create(BoardModel))
 boardRouter.get('/:id', read(BoardModel))
-boardRouter.post('/:id', update(BoardModel))
+boardRouter.patch('/:id', update(BoardModel))
 boardRouter.delete('/:id', remove(BoardModel))
 boardRouter.get('', readAll(BoardModel))
 
