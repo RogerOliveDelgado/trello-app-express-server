@@ -1,7 +1,7 @@
 import { NextFunction } from "express";
 import { Schema, model, SchemaTypes, Model } from "mongoose";
 import ITask from "./Tasks.interface";
-import BoardModel from "../../build/models/Boards/BoardModel";
+import BoardModel from "../../models/Boards/BoardModel";
 
 const TaskSchema = new Schema<ITask>({
 	title: {
@@ -43,12 +43,21 @@ const TaskSchema = new Schema<ITask>({
 	],
 });
 
-TaskSchema.pre("save", async function () {
-	const boardToUpdate = await BoardModel.findOne({ _id: this.boardRefID });
-	boardToUpdate.tasks.push(this);
+TaskSchema.pre("save", async function (next: NextFunction) {
+	try {
+		const boardToUpdate = await BoardModel.findOne({ _id: this.boardRefID });
+		boardToUpdate.tasks.push(this);
+		await boardToUpdate.save();
+		next();
+	} catch (error) {
+		next(error);
+	}
 });
 
 TaskSchema.pre("findOne", function (next: NextFunction) {
+	this.populate(["boardRefID", "employees"]);
+	next();
+}).pre("find", function (next: NextFunction) {
 	this.populate(["boardRefID", "employees"]);
 	next();
 });

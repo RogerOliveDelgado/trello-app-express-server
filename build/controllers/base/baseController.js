@@ -14,6 +14,8 @@ exports.create = create;
 const read = (model) => async ({ params: { id: _id } }, res, _next) => {
     try {
         const doc = await model.findOne({ _id }).lean().exec();
+        if (!doc)
+            return res.status(400).send({ ok: false, msg: "Cannot read a document that not exist" });
         res.status(200).send({ ok: true, data: doc });
     }
     catch (error) {
@@ -42,6 +44,8 @@ const update = (model) => async ({ params: { id }, body }, res, _next) => {
             .findByIdAndUpdate(id, { $set: { ...body } }, { new: true })
             .lean()
             .exec();
+        if (!doc)
+            return res.status(400).send({ ok: false, msg: "Cannot update a document that not exist" });
         res.status(200).send({ ok: true, data: doc });
     }
     catch (error) {
@@ -52,6 +56,8 @@ exports.update = update;
 const remove = (model) => async ({ params: { id } }, res, _next) => {
     try {
         const doc = await model.findByIdAndDelete(id);
+        if (!doc)
+            return res.status(400).send({ ok: false, msg: `Cannot delete a that does not exist` });
         res.status(200).send({ ok: true, msg: "Element deleted succesfully" });
     }
     catch (error) {

@@ -19,6 +19,10 @@ const read =
 	async ({ params: { id: _id } }: AuthRequest, res: Response, _next: NextFunction) => {
 		try {
 			const doc = await model.findOne({ _id }).lean().exec();
+
+			if (!doc)
+				return res.status(400).send({ ok: false, msg: "Cannot read a document that not exist" });
+
 			res.status(200).send({ ok: true, data: doc });
 		} catch (error) {
 			console.log(error);
@@ -50,6 +54,9 @@ const update =
 				.lean()
 				.exec();
 
+			if (!doc)
+				return res.status(400).send({ ok: false, msg: "Cannot update a document that not exist" });
+
 			res.status(200).send({ ok: true, data: doc });
 		} catch (error) {
 			res.status(400).send({ ok: false, msg: "Element cannot be updated" });
@@ -61,6 +68,10 @@ const remove =
 	async ({ params: { id } }: AuthRequest, res: Response, _next: NextFunction) => {
 		try {
 			const doc = await model.findByIdAndDelete(id);
+
+			if (!doc)
+				return res.status(400).send({ ok: false, msg: `Cannot delete a that does not exist` });
+
 			res.status(200).send({ ok: true, msg: "Element deleted succesfully" });
 		} catch (error) {
 			res.status(400).send({ ok: false, msg: "Element cannot be deleted" });

@@ -4,15 +4,20 @@ const mongoose_1 = require("mongoose");
 const BoardSchema = new mongoose_1.Schema({
     name: {
         type: String,
-        required: [true, "Name required"]
+        required: [true, "Name required"],
     },
-    tasks: [{
+    tasks: [
+        {
             type: mongoose_1.SchemaTypes.ObjectId,
             default: [],
-            ref: "Task"
-        }]
+            ref: "Task",
+        },
+    ],
 });
 BoardSchema.pre("findOne", function (next) {
+    this.populate("tasks");
+    next();
+}).pre("find", function (next) {
     this.populate("tasks");
     next();
 });

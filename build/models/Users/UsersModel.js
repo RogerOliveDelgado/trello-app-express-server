@@ -68,6 +68,9 @@ UserSchema.pre("save", async function (next) {
 UserSchema.pre("findOne", function (next) {
     this.populate("tasks");
     next();
+}).pre("find", function (next) {
+    this.populate("tasks");
+    next();
 });
 UserSchema.set("toJSON", {
     transform: (_, result) => {

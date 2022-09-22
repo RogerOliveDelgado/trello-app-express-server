@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const mongoose_1 = require("mongoose");
-const BoardModel_1 = tslib_1.__importDefault(require("../../build/models/Boards/BoardModel"));
+const BoardModel_1 = tslib_1.__importDefault(require("../../models/Boards/BoardModel"));
 const TaskSchema = new mongoose_1.Schema({
     title: {
         type: String,
@@ -42,11 +42,21 @@ const TaskSchema = new mongoose_1.Schema({
         },
     ],
 });
-TaskSchema.pre("save", async function () {
-    const boardToUpdate = await BoardModel_1.default.findOne({ _id: this.boardRefID });
-    boardToUpdate.tasks.push(this);
+TaskSchema.pre("save", async function (next) {
+    try {
+        const boardToUpdate = await BoardModel_1.default.findOne({ _id: this.boardRefID });
+        boardToUpdate.tasks.push(this);
+        await boardToUpdate.save();
+        next();
+    }
+    catch (error) {
+        next(error);
+    }
 });
 TaskSchema.pre("findOne", function (next) {
+    this.populate(["boardRefID", "employees"]);
+    next();
+}).pre("find", function (next) {
     this.populate(["boardRefID", "employees"]);
     next();
 });
