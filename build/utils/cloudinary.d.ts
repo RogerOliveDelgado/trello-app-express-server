@@ -1,3 +1,2 @@
-import cloudinary from 'cloudinary';
-declare const cloudinaryAuth: typeof cloudinary.v2;
+declare const cloudinaryAuth: any;
 export default cloudinaryAuth;

@@ -10,7 +10,7 @@ exports.boardRouter = boardRouter;
 // boardRouter.use(authenticate);
 boardRouter.post('', (0, baseController_1.create)(BoardModel_1.default));
 boardRouter.get('/:id', (0, baseController_1.read)(BoardModel_1.default));
-boardRouter.post('/:id', (0, baseController_1.update)(BoardModel_1.default));
+boardRouter.patch('/:id', (0, baseController_1.update)(BoardModel_1.default));
 boardRouter.delete('/:id', (0, baseController_1.remove)(BoardModel_1.default));
 boardRouter.get('', (0, baseController_1.readAll)(BoardModel_1.default));
 //# sourceMappingURL=boardRouter.js.map
