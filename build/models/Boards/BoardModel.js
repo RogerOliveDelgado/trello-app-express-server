@@ -10,13 +10,13 @@ const BoardSchema = new mongoose_1.Schema({
         type: Date,
         required: [true, "Initial Date required"],
     },
-    // tasks: [
-    // 	{
-    // 		type: SchemaTypes.ObjectId,
-    // 		default: [],
-    // 		ref: "Task",
-    // 	},
-    // ],
+    tasks: [
+        {
+            type: mongoose_1.SchemaTypes.ObjectId,
+            default: [],
+            ref: "Task",
+        },
+    ],
 });
 BoardSchema.pre("find", function (next) {
     console.log('entro en board');

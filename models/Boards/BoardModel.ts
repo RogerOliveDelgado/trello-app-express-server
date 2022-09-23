@@ -12,13 +12,13 @@ const BoardSchema = new Schema<IBoard>({
 		type: Date,
 		required: [true, "Initial Date required"],
 	},
-	// tasks: [
-	// 	{
-	// 		type: SchemaTypes.ObjectId,
-	// 		default: [],
-	// 		ref: "Task",
-	// 	},
-	// ],
+	tasks: [
+		{
+			type: SchemaTypes.ObjectId,
+			default: [],
+			ref: "Task",
+		},
+	],
 });
 
 BoardSchema.pre("find", function (next: NextFunction) {

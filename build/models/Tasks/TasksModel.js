@@ -65,15 +65,15 @@ TaskSchema.pre("save", async function (next) {
 // 		next(error);
 // 	}
 // });
-TaskSchema.pre("find", function (next) {
-    console.log('entro en task');
-    this.populate("board");
-    next();
-});
-TaskSchema.pre("findOne", function (next) {
-    this.populate("board");
-    next();
-});
+// TaskSchema.pre("find", function (next: NextFunction) {
+// 	console.log('entro en task');
+// 	this.populate("board");
+// 	next();
+// });
+// TaskSchema.pre("findOne", function (next: NextFunction) {
+// 	this.populate("board");
+// 	next();
+// });
 const TaskModel = (0, mongoose_1.model)("Task", TaskSchema);
 exports.default = TaskModel;
 //# sourceMappingURL=TasksModel.js.map

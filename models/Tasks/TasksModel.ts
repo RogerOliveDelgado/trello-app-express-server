@@ -69,15 +69,15 @@ TaskSchema.pre("save", async function (next: NextFunction) {
 // 	}
 // });
 
-TaskSchema.pre("find", function (next: NextFunction) {
-	console.log('entro en task');
-	this.populate("board");
-	next();
-});
-TaskSchema.pre("findOne", function (next: NextFunction) {
-	this.populate("board");
-	next();
-});
+// TaskSchema.pre("find", function (next: NextFunction) {
+// 	console.log('entro en task');
+// 	this.populate("board");
+// 	next();
+// });
+// TaskSchema.pre("findOne", function (next: NextFunction) {
+// 	this.populate("board");
+// 	next();
+// });
 
 const TaskModel = model<ITask>("Task", TaskSchema);
 
