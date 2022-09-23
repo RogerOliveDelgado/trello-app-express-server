@@ -72,6 +72,11 @@ UserSchema.pre("save", async function (next: NextFunction) {
   }
 });
 
+UserSchema.pre("find", function(next:NextFunction){
+  this.populate("tasks",{title:1})
+  next();
+})
+
 const UserModel = model<IUser, UserModel>("User", UserSchema);
 
 export default UserModel;

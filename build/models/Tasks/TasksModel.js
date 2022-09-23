@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const tslib_1 = require("tslib");
 const mongoose_1 = require("mongoose");
+const UsersModel_1 = tslib_1.__importDefault(require("../Users/UsersModel"));
 const TaskSchema = new mongoose_1.Schema({
     title: {
         type: String,
@@ -35,6 +37,20 @@ const TaskSchema = new mongoose_1.Schema({
     tags: [{
             type: String,
         }]
+});
+TaskSchema.pre("save", async function (next) {
+    const user = await UsersModel_1.default.findById({ _id: this.employees }).lean().exec();
+    user.tasks.push(this);
+    UsersModel_1.default.findByIdAndUpdate({ _id: user._id }, { $set: { tasks: user.tasks } }, { new: true }).lean().exec();
+    next();
+});
+TaskSchema.pre("find", function (next) {
+    this.populate("employees", { firstName: 1, lastName: 1, tasks: 0 });
+    next();
+});
+TaskSchema.pre("findOne", function (next) {
+    this.populate("employees", { firstName: 1, lastName: 1, tasks: 0 });
+    next();
 });
 const TaskModel = (0, mongoose_1.model)("Task", TaskSchema);
 exports.default = TaskModel;

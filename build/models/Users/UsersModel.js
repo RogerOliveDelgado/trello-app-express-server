@@ -64,6 +64,10 @@ UserSchema.pre("save", async function (next) {
         return next(error);
     }
 });
+UserSchema.pre("find", function (next) {
+    this.populate("tasks", { title: 1 });
+    next();
+});
 const UserModel = (0, mongoose_1.model)("User", UserSchema);
 exports.default = UserModel;
 //# sourceMappingURL=UsersModel.js.map
