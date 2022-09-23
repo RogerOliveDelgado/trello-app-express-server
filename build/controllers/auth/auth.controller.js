@@ -9,6 +9,7 @@ const config_1 = tslib_1.__importDefault(require("../../config/config"));
 const signInUser = async (req, res, _next) => {
     //First we take the email and password passed by the body of the request
     const { email, password } = req.body;
+    console.log(email, password);
     if (!email || !password)
         return res.status(400).json({ ok: false, msg: "All files are required" });
     try {

@@ -27,7 +27,6 @@ const UserSchema = new mongoose_1.Schema({
     password: {
         type: String,
         required: [true, "Password required"],
-        select: false,
     },
     role: {
         type: String,
@@ -44,14 +43,15 @@ const UserSchema = new mongoose_1.Schema({
         },
     ],
 });
-UserSchema.method("comparePassword", async function (candidatePassword) {
+UserSchema.methods.comparePassword = async function (candidatePassword) {
     try {
+        console.log("this", this);
         return await bcrypt_1.default.compare(candidatePassword, this.password);
     }
     catch (error) {
         return false;
     }
-});
+};
 UserSchema.pre("save", async function (next) {
     if (!this.isModified("password")) {
         return next();
@@ -65,14 +65,14 @@ UserSchema.pre("save", async function (next) {
         return next(error);
     }
 });
-UserSchema.pre("find", function (next) {
-    this.populate("tasks");
-    next();
-});
-UserSchema.pre("findOne", function (next) {
-    this.populate("tasks");
-    next();
-});
+// UserSchema.pre("find", function (next: NextFunction) {
+// 	this.populate("tasks");
+// 	next();
+// });
+// UserSchema.pre("findOne", function (next: NextFunction) {
+// 	this.populate("tasks");
+// 	next();
+// });
 UserSchema.set("toJSON", {
     transform: (_, result) => {
         delete result.password;
