@@ -1,6 +1,7 @@
 import User from "../Users/Users.interface";
 import IBoard from "../Boards/Board.interface";
 export default interface ITask {
+    [key: string]: any;
     title: string;
     description: string;
     employees: User[];

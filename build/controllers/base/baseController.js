@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.readAll = exports.remove = exports.update = exports.read = exports.create = void 0;
+exports.readByParam = exports.readAll = exports.remove = exports.update = exports.read = exports.create = void 0;
 const tslib_1 = require("tslib");
 const cloudinary_1 = tslib_1.__importDefault(require("../../utils/cloudinary"));
 const create = (model) => async (req, res, _next) => {
@@ -41,6 +41,20 @@ const readAll = (model) => async ({ query }, res, _next) => {
     }
 };
 exports.readAll = readAll;
+const readByParam = (model) => async (req, res, _next) => {
+    const { id: _id } = req.params;
+    const { param: searchParam } = req.query;
+    try {
+        if (typeof searchParam === 'string') {
+            const { [searchParam]: doc } = (await model.findOne({ _id }).lean().exec());
+            res.status(200).send({ ok: true, data: doc });
+        }
+    }
+    catch (error) {
+        res.status(400).send({ ok: false, msg: "Cannot read a document that not exist" });
+    }
+};
+exports.readByParam = readByParam;
 const urlProfilePictureCloudinary = async (imageInfo, body) => {
     const cloudInfo = await cloudinary_1.default.uploader.upload(imageInfo, {
         upload_preset: "photos",

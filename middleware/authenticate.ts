@@ -4,7 +4,7 @@ import { nextTick } from "process";
 import config from "../config/config";
 
 export default interface AuthRequest extends Request {
-  user: string | JwtPayload;
+  user: string | JwtPayload
 }
 
 const authenticate = async (

@@ -13,4 +13,5 @@ boardRouter.get('/:id', (0, baseController_1.read)(BoardModel_1.default));
 boardRouter.patch('/:id', (0, baseController_1.update)(BoardModel_1.default));
 boardRouter.delete('/:id', (0, baseController_1.remove)(BoardModel_1.default));
 boardRouter.get('', (0, baseController_1.readAll)(BoardModel_1.default));
+boardRouter.get('/:id/searchByParam', (0, baseController_1.readByParam)(BoardModel_1.default));
 //# sourceMappingURL=boardRouter.js.map

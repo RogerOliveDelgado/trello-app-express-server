@@ -22,7 +22,6 @@ const BoardSchema = new Schema<IBoard>({
 });
 
 BoardSchema.pre("find", function (next: NextFunction) {
-	console.log('entro en board');
 	this.populate("tasks");
 	next();
 });

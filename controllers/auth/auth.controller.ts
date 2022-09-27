@@ -8,7 +8,6 @@ import config from "../../config/config";
 const signInUser = async (req: Request, res: Response, _next: NextFunction) => {
 	//First we take the email and password passed by the body of the request
 	const { email, password } = req.body;
-	console.log(email, password);
 	if (!email || !password)
 		return res.status(400).json({ ok: false, msg: "All files are required" });
 

@@ -19,7 +19,6 @@ const BoardSchema = new mongoose_1.Schema({
     ],
 });
 BoardSchema.pre("find", function (next) {
-    console.log('entro en board');
     this.populate("tasks");
     next();
 });

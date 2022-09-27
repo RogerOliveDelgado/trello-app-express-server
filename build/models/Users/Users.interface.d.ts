@@ -1,6 +1,7 @@
 import Task from "../Tasks/Tasks.interface";
 import { Model } from 'mongoose';
 export default interface IUser {
+    [key: string]: any;
     firstName: string;
     lastName: string;
     address: string;
